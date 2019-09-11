@@ -3,7 +3,8 @@
 #include "game.h"
 
 Game::Game(std::size_t wWidth, std::size_t wHeight,
-  std::size_t lThickness, std::size_t pHeight, std::size_t gRuntime) : 
+  std::size_t pHeight, std::size_t lThickness, std::size_t gRuntime,
+  float ballXVel, float ballYVel) : 
   _windowWidth(wWidth), _windowHeight(wHeight), _lineThickness(lThickness),
   _paddleHeight(pHeight), _gameRuntime(gRuntime)
 {
@@ -19,7 +20,7 @@ Game::Game(std::size_t wWidth, std::size_t wHeight,
   // Setup ball in the middle of the pitch, colour black, starting to move
   // NICE randomise ball velocity
   _ball = Ball(static_cast<int> (wWidth / 2 - lThickness / 2), static_cast<int> (midY - lThickness / 2),
-    lThickness, lThickness, 0x00, 0x00, 0x00, 0xFF, -250.0f, 180.0f);
+    lThickness, lThickness, 0x00, 0x00, 0x00, 0xFF, ballXVel, ballYVel);
 }
 
 Game::~Game()
@@ -27,7 +28,7 @@ Game::~Game()
   std::cout << "Game::~Game\n";
 }
 
-void Game::Run(Renderer renderer, Controller controller)
+void Game::Run(Renderer &renderer, Controller &controller)
 {
   bool stopGame = false;
   Uint32 ticksCount = SDL_GetTicks();
@@ -78,26 +79,43 @@ void Game::updateGame()
   // update ball position
   _ball.SetCoordinates(_ball.GetX() + _ball.GetXVel() * _msPerFrame / 1000, _ball.GetY() + _ball.GetYVel() * _msPerFrame / 1000);
 
+  int xVel = _ball.GetXVel();
+  int yVel = _ball.GetYVel();
+
   // check if the player or cpu paddle collides with the ball,
   // bounce off if yes and increase x velocity of the ball by 7%
   if (playerBounce() || cpuBounce())
   {
-    _ball.SetVelocity(-1.07f * _ball.GetXVel(), _ball.GetYVel());
+    xVel = -1.07f * _ball.GetXVel();
   }
   else if (isPlayerGoal() || isCpuGoal())
   {
     // decrease ball position and velocity
     _ball.SetCoordinates(static_cast<int>(_windowWidth / 2 - _ball.GetW() / 2), static_cast<int> (_windowHeight / 2 - _ball.GetH() / 2));
-    _ball.SetVelocity(-0.85f * _ball.GetXVel(), -0.85f * _ball.GetYVel());
+    xVel = -0.85f * _ball.GetXVel();
+    yVel = -0.85f * _ball.GetYVel();
   }
   else if (sideWallBounce())
   {
-    _ball.SetVelocity(-1.02 * _ball.GetXVel(), 1.02 * _ball.GetYVel());
+    xVel = -1.02 * _ball.GetXVel();
+    yVel = 1.02 * _ball.GetYVel();
   }
   else if (topBottomWallBounce())
   {
-    _ball.SetVelocity(1.02 * _ball.GetXVel(), -1.02 * _ball.GetYVel());
+    xVel = 1.02 * _ball.GetXVel();
+    yVel = -1.02 * _ball.GetYVel();
   }
+
+  // limit ball velocity, so that there's time for the player and cpu to react
+  if (std::abs(_ball.GetXVel()) > _windowWidth)
+  {
+    xVel = 0.9f * _ball.GetXVel();
+  }
+  if (std::abs(_ball.GetYVel()) > _windowHeight)
+  {
+    yVel = 0.9f * _ball.GetYVel();
+  }
+  _ball.SetVelocity(xVel, yVel);
 }
 
 // moves player paddle according to the user input

@@ -23,7 +23,8 @@ private:
 
   int _msPerFrame = 16;
 
-  int _scorePlayer, _scoreCpu = 0;
+  int _scorePlayer = 0;
+  int _scoreCpu = 0;
   bool _goal = false;
 
   void updateGame();
@@ -40,14 +41,14 @@ private:
 
 
 public:
-  Game(std::size_t windowWidth, std::size_t windowHeight, std::size_t lineThickness, std::size_t paddleHeight, std::size_t gameRuntime);
+  Game(std::size_t windowWidth, std::size_t windowHeight, std::size_t paddleHeight, std::size_t lineThickness, std::size_t gameRuntime, float ballXVel, float ballYVel);
   ~Game();
 
   int GetScorePlayer() {return _scorePlayer;}
   int GetScoreCpu() {return _scoreCpu;}
 
 
-  void Run(Renderer renderer, Controller controller);
+  void Run(Renderer &renderer, Controller &controller);
 
 };
 #endif

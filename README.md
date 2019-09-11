@@ -38,20 +38,34 @@ At the begin of the game the ball is at the middle of the field at starts moving
 
 Be aware that every time the ball bounces off a wall or a paddle, it will slightly increase its velocity.
 
-The score and the remaining time are displayed at the window title.
+The score and the remaining time are displayed at the window title. A player might exit game any time by clicking Escape key on the keyboard. There's a slight delay before the game window closes.
 
 Good luck!
+
+## Game settings
+
+There's pong.conf in the `src` folder which allows the user to modify some game settings.
+
+* windowWidth - width of the game window (integer). Default: 960.
+* windowHeight - height of the game window (integer). Default: 720.
+* lineThickness - width of the paddles, ball dimensions, line width (integer). Default: 16.
+* paddleHeight - height of the paddles (integer). Default: 96.
+* gameRuntime - runtime of the game in seconds (integer). Default: 90.
+* ballXVell - initial x axis velocity of the ball (float). Negative values mean that the ball moves towards player, positive - towards the cpu. Default: -250.0f.
+* ballYVell - initial y axis velocity of the ball (float). Negative values mean that the ball moves up, positive - down. Default: 180.0f.
 
 ## File Structure
 
 All the source files are in the `src` folder.
 
 * ball.cpp - the representation of the ball which derivates from the MovingObject class.
+* config.cpp - loads the game settings from pong.conf.
 * controller.cpp - processes the user input (key presses on the keyboard).
 * game.cpp - controls and updates the game.
 * main.cpp - the main programm file which initialises and runs the game.
 * movingobject.cpp - the abstract class to represent moving objects of the game (ball and paddles).
 * paddle.cpp - the representation of a paddle which derivates from the MovingObject class.
+* pong.conf - game settings (window size, paddle dimensions etc).
 * renderer.cpp - uses SDL2 library to render the field, ball and paddles.
 
 ## Rubric Points
@@ -59,6 +73,7 @@ All the source files are in the `src` folder.
 ### Loops, Functions, I/O
 
 * The project demonstrates an understanding of C++ functions and control structures - game.cpp has the most control structures and functions.
+* The project reads data from a file and process the data, or the program writes data to a file - config.cpp
 * The project accepts user input and processes the input - controller.cpp processes user input and updates the paddle position accordingly.
 
 ### Object Oriented Programming
@@ -70,4 +85,5 @@ All the source files are in the `src` folder.
 * Classes encapsulate behavior - ball.cpp, paddle.cpp - game.cpp updates Ball and Paddle class members through methods.
 
 ### Memory Management
-* The project uses destructors appropriately - renderer.cpp, line 33.
+* The project makes use of references in function declarations - controller.cpp line 4, game.cpp line 30.
+* The project uses destructors appropriately - renderer.cpp line 33.

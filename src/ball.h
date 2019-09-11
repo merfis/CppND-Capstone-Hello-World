@@ -13,16 +13,16 @@ public:
   Ball(int x, int y, int w, int h, int r, int g, int b, int a, float xVel, float yVel);
   ~Ball();
 
-  float GetXVel() {return _xVel;}
-  float GetYVel() {return _yVel;}
+  float GetXVel() const {return _xVel;}
+  float GetYVel() const {return _yVel;}
 
-  void SetVelocity(float xVel, float yVel)
+  void SetVelocity(const float xVel, const float yVel)
   {
     _xVel = xVel;
     _yVel = yVel;
   }
 
-  void PrintVelocity()
+  void PrintVelocity() const
   {
     std::cout << "Ball velocity: " << _xVel << ", " << _yVel << std::endl;
   }

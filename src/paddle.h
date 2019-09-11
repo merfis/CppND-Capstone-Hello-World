@@ -14,9 +14,9 @@ public:
   Paddle(int x, int y, int w, int h, int r, int g, int b, int a, int d);
   ~Paddle();
 
-  int GetDirection() {return _direction;}
+  int GetDirection() const {return _direction;}
   void ResetDirection() {_direction = 0;}
-  void UpdateDirection(int d) {_direction += d;}
+  void UpdateDirection(const int d) {_direction += d;}
 };
 
 #endif

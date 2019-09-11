@@ -17,28 +17,28 @@ public:
 
   MovingObject(int x, int y, int w, int h, int r, int g, int b, int a);
 
-  int GetX() {return _x;}
-  int GetY() {return _y;}
-  int GetW() {return _w;}
-  int GetH() {return _h;}
-  int GetR() {return _r;}
-  int GetG() {return _g;}
-  int GetB() {return _b;}
-  int GetA() {return _a;}
+  int GetX() const {return _x;}
+  int GetY() const {return _y;}
+  int GetW() const {return _w;}
+  int GetH() const {return _h;}
+  int GetR() const {return _r;}
+  int GetG() const {return _g;}
+  int GetB() const {return _b;}
+  int GetA() const {return _a;}
   
-  void SetCoordinates(int x, int y)
+  void SetCoordinates(const int x, const int y)
   {
     _x = static_cast<int>(x);
     _y = static_cast<int>(y);
   }
 
-  void SetDimensions(int w, int h)
+  void SetDimensions(const int w, const int h)
   {
     _w = static_cast<int>(w);
     _h = static_cast<int>(h);
   }
 
-  void SetColour(int r, int g, int b, int a)
+  void SetColour(const int r, const int g, const int b, const int a)
   {
     _r = r;
     _g = g;
@@ -46,7 +46,7 @@ public:
     _a = a;
   }
 
-  void PrintCoordinates()
+  void PrintCoordinates() const
   {
     std::cout << "Object is at: " << _x << ", " << _y << std::endl;
   }

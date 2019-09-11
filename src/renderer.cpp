@@ -36,9 +36,9 @@ Renderer::~Renderer()
   SDL_Quit();
 }
 
-void Renderer::Render(Paddle playerPaddle, Paddle cpuPaddle, Ball ball)
+void Renderer::Render(const Paddle playerPaddle, const Paddle cpuPaddle, const Ball ball)
 {
-    // Set draw color to green for the pitch
+  // Set draw color to green for the pitch
   SDL_SetRenderDrawColor(_sdlRenderer, 0x19, 0xA2, 0x23, 0xFF);
 
   // Clear back buffer
@@ -88,7 +88,7 @@ void Renderer::Render(Paddle playerPaddle, Paddle cpuPaddle, Ball ball)
       ball.GetH()};
   SDL_RenderFillRect(_sdlRenderer, &b);
 
-  // Draw player paddle red
+  // Draw player paddle
   SDL_SetRenderDrawColor(_sdlRenderer, playerPaddle.GetR(), playerPaddle.GetG(), playerPaddle.GetB(), playerPaddle.GetA());
   SDL_Rect player{
       static_cast<int>(playerPaddle.GetX()),
@@ -97,7 +97,7 @@ void Renderer::Render(Paddle playerPaddle, Paddle cpuPaddle, Ball ball)
       static_cast<int>(playerPaddle.GetH())};
   SDL_RenderFillRect(_sdlRenderer, &player);
 
-  // Draw CPU paddle blue
+  // Draw CPU paddle
   SDL_SetRenderDrawColor(_sdlRenderer, cpuPaddle.GetR(), cpuPaddle.GetG(), cpuPaddle.GetB(), cpuPaddle.GetA());
   SDL_Rect cpu{
       static_cast<int>(cpuPaddle.GetX()),
